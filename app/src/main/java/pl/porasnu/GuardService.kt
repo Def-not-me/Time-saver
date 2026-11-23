@@ -33,6 +33,7 @@ class GuardService : Service() {
     private val tick = object : Runnable {
         override fun run() {
             check(fresh = false)
+            checkPip()
             handler.postDelayed(this, 2000)
         }
     }
@@ -122,6 +123,40 @@ class GuardService : Service() {
         return s
     }
 
+    /** Ostatni stan każdej aktywności: (typ zdarzenia, czas). */
+    private val activityState = HashMap<String, Pair<Int, Long>>()
+    private val pipLogged = mutableSetOf<String>()
+
+    /**
+     * Pływające okno (PiP) innej aplikacji nad blokadą.
+     * Pod pełnoekranową blokadą każda inna aktywność powinna być ZATRZYMANA.
+     * Aktywność, która jest tylko WSTRZYMANA dłużej niż 3 s, jest nadal widoczna,
+     * czyli najpewniej pływa w PiP.
+     */
+    private fun pipApp(): String? {
+        if (Build.VERSION.SDK_INT < 29) return null
+        val now = System.currentTimeMillis()
+        val ignore = Store.allowed(this) + phoneApps() + packageName
+        return activityState.entries.firstOrNull { (key, v) ->
+            val pkg = key.substringBefore('/')
+            v.first == UsageEvents.Event.ACTIVITY_PAUSED && now - v.second in 3000..12 * 3600_000L && pkg !in ignore
+        }?.key?.substringBefore('/')
+    }
+
+    private fun checkPip() {
+        if (!BlockActivity.visible) { BlockActivity.pipWarning = null; return }
+        foregroundApp() // odśwież zdarzenia
+        val pkg = pipApp()
+        if (pkg == null) {
+            BlockActivity.pipWarning = null
+            pipLogged.clear()
+            return
+        }
+        val name = Apps.label(this, pkg)
+        BlockActivity.pipWarning = name
+        if (pipLogged.add(pkg)) Store.add(this, Store.PIP_INNE, name)
+    }
+
     private var lastFg: String? = null
     private var lastQuery = 0L
 
@@ -136,6 +171,14 @@ class GuardService : Service() {
             events.getNextEvent(e)
             @Suppress("DEPRECATION")
             if (e.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) lastFg = e.packageName
+            if (Build.VERSION.SDK_INT >= 29) {
+                when (e.eventType) {
+                    UsageEvents.Event.ACTIVITY_RESUMED,
+                    UsageEvents.Event.ACTIVITY_PAUSED,
+                    UsageEvents.Event.ACTIVITY_STOPPED ->
+                        activityState["${e.packageName}/${e.className}"] = e.eventType to e.timeStamp
+                }
+            }
         }
         lastQuery = now
         return lastFg

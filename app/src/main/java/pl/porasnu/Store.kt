@@ -16,6 +16,7 @@ object Store {
     const val ZMIANA = "Zmiana godzin"
     const val DODANIE = "Nowa dozwolona aplikacja"
     const val OKNO = "Próba obejścia (okno / PiP)"
+    const val PIP_INNE = "Pływające okno innej aplikacji"
 
     private fun p(c: Context) = c.getSharedPreferences("pora_snu", Context.MODE_PRIVATE)
 

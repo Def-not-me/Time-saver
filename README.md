@@ -10,7 +10,7 @@ To narzędzie do samodyscypliny, nie kontrola rodzicielska. Ma dodać chwilę na
 
 ## ✨ Funkcje
 
-- **Pełnoekranowa blokada** w ustawionych godzinach (domyślnie 22:00–07:00). Przycisk Wstecz nie działa, a Home i „Ostatnie aplikacje” nie pozwalają uciec: ekran wraca po ok. 2 s. Zmniejszenie blokady do pływającego okna, obrazu w obrazie (PiP) albo podzielonego ekranu jest wykrywane: blokada wraca na pełny ekran, a próba trafia do historii.
+- **Pełnoekranowa blokada** w ustawionych godzinach (domyślnie 22:00–07:00). Przycisk Wstecz nie działa, a Home i „Ostatnie aplikacje” nie pozwalają uciec: ekran wraca po ok. 2 s. Zmniejszenie blokady do pływającego okna, obrazu w obrazie (PiP) albo podzielonego ekranu jest wykrywane: blokada wraca na pełny ekran, a próba trafia do historii. Pływające okno innej aplikacji (np. film w PiP) nad blokadą też jest wykrywane: na ekranie blokady pojawia się ostrzeżenie, a zdarzenie trafia do historii (Android 10+).
 - **Obejście z powodem.** Wpisujesz, dlaczego musisz teraz użyć telefonu (min. 15 znaków i 3 słowa), wybierasz 5, 15 albo 30 minut i czekasz 10 sekund, zanim przycisk się odblokuje.
 - **Dozwolone aplikacje.** Sam wybierasz aplikacje, z których możesz korzystać w nocy bez podawania powodu (np. budzik, kalendarz, plan zajęć), i otwierasz je prosto z ekranu blokady. Domyślnie lista jest pusta, a telefon jest dozwolony zawsze. Dostęp obowiązuje tylko wtedy, gdy jesteś w tej aplikacji: wyjście do ekranu głównego albo przełączenie na inną aplikację przywraca blokadę. Listę możesz zmienić.
 - **Monitorowanie.** Aplikacja zapisuje próby odblokowania, obejścia (z powodem), telefony, wyłączenia ochrony i zmiany ustawień. Statystyki „tej nocy” i „ostatnie 7 dni” widać na ekranie blokady i w aplikacji.
@@ -98,6 +98,7 @@ Pull requesty są mile widziane.
 
 - Ochronę da się obejść „siłowo”: wymuszonym zatrzymaniem w ustawieniach, odebraniem uprawnień albo odinstalowaniem aplikacji. To świadoma decyzja, bo narzędzie ma pomagać, a nie więzić.
 - Bez „dostępu do danych o użyciu” blokada zasłoni też dozwolone aplikacje.
+- Pływającego okna (PiP) innej aplikacji nie da się zamknąć z poziomu zwykłej aplikacji. Time Saver tylko je wykrywa, ostrzega i zapisuje w historii.
 - Niektóre nakładki producentów mogą zabijać usługę w tle (patrz sekcja o bateriach).
 
 ## 📄 Licencja

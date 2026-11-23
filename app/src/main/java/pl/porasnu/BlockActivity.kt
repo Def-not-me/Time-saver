@@ -28,6 +28,10 @@ class BlockActivity : Activity() {
     companion object {
         @Volatile
         var visible = false
+
+        /** Nazwa aplikacji, której okno PiP pływa nad blokadą (ustawia GuardService). */
+        @Volatile
+        var pipWarning: String? = null
         private const val WAIT_SECONDS = 10 // "chwila namysłu" przed odblokowaniem
     }
 
@@ -36,6 +40,7 @@ class BlockActivity : Activity() {
 
     private lateinit var clock: TextView
     private lateinit var stats: TextView
+    private lateinit var pipBanner: TextView
     private lateinit var askBtn: Button
     private lateinit var form: LinearLayout
     private lateinit var reason: EditText
@@ -51,6 +56,13 @@ class BlockActivity : Activity() {
             if (!Store.shouldBlock(this@BlockActivity)) { finish(); return }
             if (checkFullscreen()) return
             clock.text = timeFmt.format(Date())
+            val pip = pipWarning
+            if (pip != null) {
+                pipBanner.text = "⚠️ Nad blokadą pływa okno: $pip\nZamknij je – przeciągnij je na ✕ na dole ekranu.\nTa próba została zapisana w historii."
+                pipBanner.visibility = View.VISIBLE
+            } else {
+                pipBanner.visibility = View.GONE
+            }
             if (waitLeft > 0) waitLeft--
             updateUnlock()
             handler.postDelayed(this, 1000)
@@ -142,6 +154,8 @@ class BlockActivity : Activity() {
             8
         )
         stats = col.add(label("", 14f, gray).center(), 24)
+        pipBanner = col.add(label("", 15f, Color.parseColor("#FFB74D"), bold = true).center(), 16)
+        pipBanner.visibility = View.GONE
 
         // Dozwolone aplikacje – bez podawania powodu
         val allowed = Store.allowed(this).filter { Apps.launchIntent(this, it) != null }

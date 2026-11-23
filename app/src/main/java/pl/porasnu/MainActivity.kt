@@ -125,6 +125,7 @@ class MainActivity : Activity() {
                     "Obejścia blokady: ${Store.count(this, Store.OBEJSCIE, week)}\n" +
                     "Telefony: ${Store.count(this, Store.TELEFON, week)}\n" +
                     "Próby obejścia oknem / PiP: ${Store.count(this, Store.OKNO, week)}\n" +
+                    "Pływające okna innych aplikacji: ${Store.count(this, Store.PIP_INNE, week)}\n" +
                     "Wyłączenia ochrony: ${Store.count(this, Store.WYLACZENIE, week)}\n" +
                     "Obejścia łącznie: ${Store.count(this, Store.OBEJSCIE)}",
                 15f

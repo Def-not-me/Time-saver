@@ -2,6 +2,7 @@ package pl.porasnu
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -48,6 +49,7 @@ class BlockActivity : Activity() {
     private val tick = object : Runnable {
         override fun run() {
             if (!Store.shouldBlock(this@BlockActivity)) { finish(); return }
+            if (checkFullscreen()) return
             clock.text = timeFmt.format(Date())
             if (waitLeft > 0) waitLeft--
             updateUnlock()
@@ -66,6 +68,46 @@ class BlockActivity : Activity() {
         visible = true
         refreshStats()
         handler.post(tick)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkFullscreen()
+    }
+
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean, newConfig: Configuration) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode, newConfig)
+        checkFullscreen()
+    }
+
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        checkFullscreen()
+    }
+
+    private var escapeLogged = false
+
+    /**
+     * Wykrywa obejście przez okno pływające, PiP albo podzielony ekran.
+     * Zwraca true, jeśli ekran blokady został zamknięty – usługa w ciągu ~2 s
+     * otworzy go ponownie, tym razem na pełnym ekranie.
+     */
+    private fun checkFullscreen(): Boolean {
+        var shrunk = isInMultiWindowMode || isInPictureInPictureMode
+        if (!shrunk && Build.VERSION.SDK_INT >= 30) {
+            val cur = windowManager.currentWindowMetrics.bounds
+            val max = windowManager.maximumWindowMetrics.bounds
+            shrunk = cur.width() < max.width() * 0.9 || cur.height() < max.height() * 0.9
+        }
+        if (!shrunk) return false
+        if (!escapeLogged) {
+            escapeLogged = true
+            Store.add(this, Store.OKNO)
+        }
+        visible = false
+        handler.removeCallbacks(tick)
+        finishAndRemoveTask()
+        return true
     }
 
     override fun onStop() {

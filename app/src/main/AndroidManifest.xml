@@ -42,6 +42,8 @@
             android:exported="false"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
+            android:resizeableActivity="false"
+            android:supportsPictureInPicture="false"
             android:taskAffinity="pl.porasnu.block"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
             android:windowSoftInputMode="adjustResize" />

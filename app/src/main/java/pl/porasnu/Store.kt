@@ -15,6 +15,7 @@ object Store {
     const val WYLACZENIE = "Wyłączenie ochrony"
     const val ZMIANA = "Zmiana godzin"
     const val DODANIE = "Nowa dozwolona aplikacja"
+    const val OKNO = "Próba obejścia (okno / PiP)"
 
     private fun p(c: Context) = c.getSharedPreferences("pora_snu", Context.MODE_PRIVATE)
 

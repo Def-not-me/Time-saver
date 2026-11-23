@@ -104,7 +104,7 @@ class MainActivity : Activity() {
         // --- Dozwolone aplikacje ---
         root.add(label("Dozwolone w nocy (bez powodu)", 18f, bold = true), 28)
         val allowed = Store.allowed(this).sortedBy { Apps.label(this, it).lowercase() }
-        if (allowed.isEmpty()) root.add(label("Brak – wszystko jest blokowane.", 14f, gray), 6)
+        if (allowed.isEmpty()) root.add(label("Brak – w nocy dozwolony jest tylko telefon.", 14f, gray), 6)
         for (pkg in allowed) {
             root.add(button("✕  ${Apps.label(this, pkg)}") {
                 Store.setAllowed(this, Store.allowed(this) - pkg)

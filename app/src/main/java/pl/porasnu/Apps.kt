@@ -5,19 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Process
-import android.provider.AlarmClock
 
 /** Pomocnicze funkcje do listy aplikacji dozwolonych w nocy. */
 object Apps {
-
-    /** Znane pakiety, które domyślnie są dozwolone (jeśli są zainstalowane). */
-    private val KNOWN_DEFAULTS = listOf(
-        "com.google.android.deskclock",       // Zegar Google
-        "com.sec.android.app.clockpackage",   // Zegar Samsung
-        "com.android.deskclock",              // Zegar Xiaomi / AOSP
-        "com.google.android.calendar",        // Kalendarz Google
-        "com.anthropic.claude",               // Claude
-    )
 
     /** Wszystkie aplikacje z ikoną w launcherze: (pakiet, nazwa). */
     fun launchable(c: Context): List<Pair<String, String>> {
@@ -40,18 +30,12 @@ object Apps {
     fun launchIntent(c: Context, pkg: String): Intent? =
         c.packageManager.getLaunchIntentForPackage(pkg)
 
-    fun defaults(c: Context): Set<String> {
-        val s = mutableSetOf<String>()
-        // Domyślna aplikacja budzika w tym telefonie
-        c.packageManager.resolveActivity(Intent(AlarmClock.ACTION_SHOW_ALARMS), 0)
-            ?.activityInfo?.packageName
-            ?.takeIf { it != "android" }
-            ?.let { s += it }
-        KNOWN_DEFAULTS.filter { launchIntent(c, it) != null }.forEach { s += it }
-        // USOS (np. USOS PWr / USOSmobile) – szukamy po nazwie
-        launchable(c).filter { it.second.contains("USOS", ignoreCase = true) }.forEach { s += it.first }
-        return s
-    }
+    /**
+     * Domyślnie lista jest pusta – telefon jest dozwolony zawsze (GuardService.phoneApps),
+     * a resztę użytkownik dodaje sam w ustawieniach.
+     */
+    @Suppress("UNUSED_PARAMETER")
+    fun defaults(c: Context): Set<String> = emptySet()
 
     /** Czy nadano "Dostęp do danych o użyciu" (potrzebne, by wiedzieć, jaka aplikacja jest na ekranie). */
     fun hasUsageAccess(c: Context): Boolean {

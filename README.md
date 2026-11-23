@@ -12,7 +12,7 @@ To narzędzie do samodyscypliny, nie kontrola rodzicielska. Ma dodać chwilę na
 
 - **Pełnoekranowa blokada** w ustawionych godzinach (domyślnie 22:00–07:00). Przycisk Wstecz nie działa, a Home i „Ostatnie aplikacje” nie pozwalają uciec: ekran wraca po ok. 2 s.
 - **Obejście z powodem.** Wpisujesz, dlaczego musisz teraz użyć telefonu (min. 15 znaków i 3 słowa), wybierasz 5, 15 albo 30 minut i czekasz 10 sekund, zanim przycisk się odblokuje.
-- **Dozwolone aplikacje.** Budzik, Kalendarz Google, Claude i USOS są dostępne bez podawania powodu, prosto z ekranu blokady. Dostęp obowiązuje tylko wtedy, gdy jesteś w tej aplikacji: wyjście do ekranu głównego albo przełączenie na inną aplikację przywraca blokadę. Listę możesz zmienić.
+- **Dozwolone aplikacje.** Sam wybierasz aplikacje, z których możesz korzystać w nocy bez podawania powodu (np. budzik, kalendarz, plan zajęć), i otwierasz je prosto z ekranu blokady. Domyślnie lista jest pusta, a telefon jest dozwolony zawsze. Dostęp obowiązuje tylko wtedy, gdy jesteś w tej aplikacji: wyjście do ekranu głównego albo przełączenie na inną aplikację przywraca blokadę. Listę możesz zmienić.
 - **Monitorowanie.** Aplikacja zapisuje próby odblokowania, obejścia (z powodem), telefony, wyłączenia ochrony i zmiany ustawień. Statystyki „tej nocy” i „ostatnie 7 dni” widać na ekranie blokady i w aplikacji.
 - **Wyłączenie tylko z powodem.** Wyłączenie ochrony, zmiana godzin i dodanie nowej dozwolonej aplikacji (przy włączonej ochronie) wymagają uzasadnienia, które trafia do historii.
 - **Telefon zawsze działa.** Przycisk „📞 Muszę zadzwonić” otwiera aplikację telefonu. Działa ona jak pozostałe dozwolone aplikacje: po wyjściu z niej blokada wraca. Blokada nie pokazuje się też w trakcie rozmowy.
@@ -40,7 +40,7 @@ W aplikacji nadaj po kolei uprawnienia (przyciski są na ekranie):
 | **Dostęp do danych o użyciu** | Aplikacja wie, co jest na ekranie, i nie zasłania dozwolonych aplikacji |
 | Bez optymalizacji baterii | System nie wyłącza ochrony w nocy |
 
-Potem ustaw godziny ciszy, sprawdź listę dozwolonych aplikacji i włącz przełącznik **„Ochrona włączona”**.
+Potem ustaw godziny ciszy, dodaj aplikacje dozwolone w nocy (**+ Dodaj aplikację**, np. budzik) i włącz przełącznik **„Ochrona włączona”**.
 
 **Producenci z agresywnym oszczędzaniem baterii:**
 - **Xiaomi / Redmi / POCO:** włącz „Autostart” i „Wyświetlaj wyskakujące okna w tle”.
@@ -79,7 +79,7 @@ Kotlin, czyste Android SDK, zero zewnętrznych bibliotek. minSdk 26 (Android 8.0
 | `BlockActivity.kt` | Pełnoekranowy ekran blokady: zegar, statystyki, dozwolone aplikacje i formularz obejścia z powodem. |
 | `MainActivity.kt` | Ustawienia, uprawnienia, lista dozwolonych aplikacji, statystyki i historia. |
 | `Store.kt` | Ustawienia i dziennik zdarzeń w `SharedPreferences` (JSON, do 1000 ostatnich wpisów). |
-| `Apps.kt` | Lista aplikacji, domyślne wyjątki (budzik, kalendarz, Claude, USOS) i sprawdzanie uprawnień. |
+| `Apps.kt` | Lista zainstalowanych aplikacji i sprawdzanie uprawnień. |
 | `BootReceiver.kt` | Wznawia ochronę po restarcie i po aktualizacji aplikacji. |
 
 Uruchamianie aktywności z tła jest możliwe dzięki uprawnieniu `SYSTEM_ALERT_WINDOW`, które jest jednym z wyjątków od ograniczeń Androida 10+.

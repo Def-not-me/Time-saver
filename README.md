@@ -12,10 +12,10 @@ To narzędzie do samodyscypliny, nie kontrola rodzicielska. Ma dodać chwilę na
 
 - **Pełnoekranowa blokada** w ustawionych godzinach (domyślnie 22:00–07:00). Przycisk Wstecz nie działa, a Home i „Ostatnie aplikacje” nie pozwalają uciec: ekran wraca po ok. 2 s.
 - **Obejście z powodem.** Wpisujesz, dlaczego musisz teraz użyć telefonu (min. 15 znaków i 3 słowa), wybierasz 5, 15 albo 30 minut i czekasz 10 sekund, zanim przycisk się odblokuje.
-- **Dozwolone aplikacje.** Budzik, Kalendarz Google, Claude i USOS są dostępne bez podawania powodu, prosto z ekranu blokady. Listę możesz zmienić.
+- **Dozwolone aplikacje.** Budzik, Kalendarz Google, Claude i USOS są dostępne bez podawania powodu, prosto z ekranu blokady. Dostęp obowiązuje tylko wtedy, gdy jesteś w tej aplikacji: wyjście do ekranu głównego albo przełączenie na inną aplikację przywraca blokadę. Listę możesz zmienić.
 - **Monitorowanie.** Aplikacja zapisuje próby odblokowania, obejścia (z powodem), telefony, wyłączenia ochrony i zmiany ustawień. Statystyki „tej nocy” i „ostatnie 7 dni” widać na ekranie blokady i w aplikacji.
 - **Wyłączenie tylko z powodem.** Wyłączenie ochrony, zmiana godzin i dodanie nowej dozwolonej aplikacji (przy włączonej ochronie) wymagają uzasadnienia, które trafia do historii.
-- **Telefon zawsze działa.** Przycisk „📞 Muszę zadzwonić” daje 5 minut na połączenie. Blokada nie pokazuje się w trakcie rozmowy.
+- **Telefon zawsze działa.** Przycisk „📞 Muszę zadzwonić” otwiera aplikację telefonu. Działa ona jak pozostałe dozwolone aplikacje: po wyjściu z niej blokada wraca. Blokada nie pokazuje się też w trakcie rozmowy.
 - **Działa po restarcie** telefonu i po aktualizacji aplikacji.
 - **Bez internetu i bez reklam.** Wszystkie dane zostają na telefonie.
 

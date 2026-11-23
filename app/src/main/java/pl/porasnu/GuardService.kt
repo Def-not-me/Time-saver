@@ -19,6 +19,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
+import android.telecom.TelecomManager
 
 /**
  * Usługa pierwszoplanowa: co 2 s sprawdza, czy trwa cisza nocna i czy telefon
@@ -103,7 +104,7 @@ class GuardService : Service() {
 
         // Dozwolona aplikacja na ekranie -> nie blokujemy
         val fg = foregroundApp()
-        if (fg != null && fg in Store.allowed(this)) return
+        if (fg != null && (fg in Store.allowed(this) || fg in phoneApps())) return
 
         if (fresh) Store.add(this, Store.PROBA)
         if (BlockActivity.visible) return
@@ -112,6 +113,13 @@ class GuardService : Service() {
             Intent(this, BlockActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
         )
+    }
+
+    /** Domyślna aplikacja telefonu + ekran rozmowy (tylko gdy są na ekranie). */
+    private fun phoneApps(): Set<String> {
+        val s = mutableSetOf("com.android.incallui", "com.android.server.telecom")
+        getSystemService(TelecomManager::class.java)?.defaultDialerPackage?.let { s += it }
+        return s
     }
 
     private var lastFg: String? = null

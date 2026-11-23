@@ -186,9 +186,10 @@ class BlockActivity : Activity() {
     }
 
     private fun call() {
-        // Krótkie, zapisywane w historii okno na połączenie
-        Store.add(this, Store.TELEFON, "", 5)
-        Store.setBypass(this, 5)
+        // Telefon jest dozwolony tylko na czas korzystania z niego –
+        // wyjście do ekranu głównego lub innej aplikacji = blokada wraca.
+        Store.add(this, Store.TELEFON)
+        GuardService.graceUntil = System.currentTimeMillis() + 5000
         startActivity(Intent(Intent.ACTION_DIAL).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         finish()
     }
